@@ -13,7 +13,7 @@ To check integration:
    ````
 3. Install requirements:
     ```bash
-    pip3 install -r requirements.txt
+   cat requirements.txt | grep --invert-match pkg-resources | xargs -n 1 pip install
     ```
 4. Run celery worker:
     ```bash
