@@ -6,21 +6,26 @@ To check integration:
     docker pull redis
     docker run -p 6379:6379 redis
    ```
-2. Create a virtual environment:
+2. git clone and Create a virtual environment:
    ```bash
-    python3 -m venv env
+    git clone https://github.com/echochio-tw/flask-celery-appbuilder-poc.git
+    mv flask-celery-appbuilder-poc app
+    cd app
+    virtualenv -p python3 env
     source env/bin/activate
    ````
 3. Install requirements:
     ```bash
-   cat requirements.txt | grep --invert-match pkg-resources | xargs -n 1 pip install
+    python -m pip install --upgrade pip
+    cat requirements.txt | grep --invert-match pkg-resources | xargs -n 1 pip install
     ```
-4. Run celery worker:
+4. Crate admin and Run celery worker:
     ```bash
-    celery -A app.celery worker
+    flask fab create-admin
+    celery -A app.celery worker &
     ```
 5. Run the application:
     ```bash
-    flask run
+    flask run --with-threads --reload --port=5003
     ```
-6. Go to any path which isn't defined in the app, let's say : http://localhost:5000/fasfdsafasfd
+6. Go to any path which isn't defined in the app, let's say : http://localhost:5003/
